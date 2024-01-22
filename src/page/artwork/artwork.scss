@@ -1,0 +1,89 @@
+.artwork-page {
+  width: 100%;
+  min-height: calc(100vh - 110px);
+
+  .art-container {
+    height: 100%;
+    gap: 20px;
+    margin-top: 2rem;
+    display: flex;
+    position: relative;
+    min-height: 350px;
+    max-width: 100%;
+    overflow: hidden;
+    .image-container {
+      min-height: 70vh;
+      min-width: 40%;
+      min-height: 100%;
+      background-color: white;
+      object-fit: cover;
+      border-radius: 9px;
+      img {
+        width: 100%;
+        border-radius: 9px;
+        min-height: 100%;
+        object-fit: cover;
+      }
+    }
+    .other-collection {
+      border-radius: 9px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      .collection-container {
+        display: flex;
+        margin-top: 10px;
+        gap: 10px;
+        font-size: 12px;
+        cursor: pointer;
+
+        img {
+          object-fit: cover;
+          height: 140px;
+          min-width: 100%;
+          border-radius: 9px;
+        }
+      }
+    }
+    .description-container {
+      border-radius: 9px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+    }
+    .art-description {
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .name {
+        font-size: 28px;
+      }
+      .collection,
+      .price {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 2px;
+      }
+      .description {
+        margin-top: 10px;
+      }
+
+      .artist-container {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 9px;
+        font-size: 16px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
+        b {
+          line-height: 2;
+        }
+        img {
+          width: 100px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}

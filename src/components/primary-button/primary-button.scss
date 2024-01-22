@@ -1,0 +1,23 @@
+.primary-button-component {
+  padding: 15px 30px 15px 40px;
+  font-size: 14px;
+  display: flex;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  color: rgb(198, 198, 198);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  background-color: rgba(86, 86, 86, 0.572);
+  transition: background-color 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    background-color: rgba(207, 207, 207, 0.4);
+  }
+  &:disabled {
+    filter: brightness(0.9);
+  }
+}

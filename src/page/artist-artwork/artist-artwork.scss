@@ -1,0 +1,77 @@
+.artist-artwork-page {
+  border: 1px solid rgb(215, 215, 215);
+  width: 100%;
+  min-height: 100%;
+  padding: 30px;
+  border-radius: 9px;
+  .artworks-container {
+    margin-top: 1rem;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 100%;
+    .art-container {
+      border-radius: 9px;
+      background-color: #d6d6d616;
+      position: relative;
+      height: 34vh;
+      min-height: 240px;
+      width: calc(20% - 10px);
+      overflow: hidden;
+      cursor: pointer;
+      img {
+        border-radius: 9px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.5s ease-in-out;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+      .art-description {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px;
+        width: calc(100% - 10px);
+        font-size: 12px;
+        height: fit-content;
+        background-color: #1f1f1fb5;
+        position: absolute;
+        bottom: 0px;
+        color: white;
+        border-radius: 0 0 9px 9px;
+        .react-toggle {
+          transform: scale(0.8);
+        }
+      }
+    }
+  }
+  .artist-artwork-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button {
+      font-size: 14px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      border: 1px solid rgb(215, 215, 215);
+      background-color: transparent;
+      color: rgb(215, 215, 215);
+    }
+  }
+  .collections-filters {
+    display: flex;
+    gap: 5px;
+    .collection {
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover,
+      &.active {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+}

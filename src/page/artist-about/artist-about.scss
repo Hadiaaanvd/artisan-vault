@@ -1,0 +1,33 @@
+.artist-about-page {
+  border: 1px solid rgb(215, 215, 215);
+  width: 100%;
+  min-height: 100%;
+  padding: 30px;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .about-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    .about-headings {
+      width: 80%;
+    }
+  }
+
+  .profile-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 20px;
+
+    .profile-fields-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+  }
+}
