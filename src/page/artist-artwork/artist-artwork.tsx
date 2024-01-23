@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Toggle from "react-toggle";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ArtworkType, FilterType } from "../gallery/gallery";
 import { authType } from "../../App";
 import "react-toggle/style.css";
 import "./artist-artwork.scss";
+import { AppDispatch } from "../../redux/store";
+import { updateArtworkStatus } from "../../redux/artwork/artwork.action";
+import { useNavigate } from "react-router-dom";
+
+type mouseEvent = React.MouseEvent<HTMLButtonElement>;
 const ArtistArtwork: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const allArtwork = useSelector(
     (state: { art: { artwork: ArtworkType[] } }) => state.art.artwork
   );
@@ -18,11 +25,21 @@ const ArtistArtwork: React.FC = () => {
     collection: "All",
   });
 
+  const handleToggle = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    artwork: ArtworkType
+  ) => {
+    e.stopPropagation();
+    e.preventDefault();
+    dispatch(updateArtworkStatus(artwork.id, !artwork.disabled));
+  };
+
   useEffect(() => {
     if (allArtwork.length) {
       const collNames = allArtwork
         .filter((x) => x.artist?.email === currentUser.email)
         .map((artwork) => artwork.collection || "");
+      console.log(allArtwork);
       const uniqueCollections = ["All", ...new Set(collNames)];
       setCollections(uniqueCollections);
     }
@@ -73,7 +90,11 @@ const ArtistArtwork: React.FC = () => {
       </div>
       <div className="artworks-container">
         {artworks.map((art: ArtworkType, index: number) => (
-          <div className="art-container" key={index}>
+          <div
+            className="art-container"
+            key={index}
+            onClick={() => navigate(`/artist/artwork/${art.id}`)}
+          >
             <img src={art.image} alt="" />
 
             <div className="art-description">
@@ -84,7 +105,13 @@ const ArtistArtwork: React.FC = () => {
                 <div className="collection">{art.collection}</div>
                 <div className="price">{art.price}</div>
               </div>
-              <Toggle icons={false} defaultChecked={true} onChange={() => {}} />
+              <Toggle
+                icons={false}
+                defaultChecked={!art.disabled} // Assuming 'disabled' is a boolean
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleToggle(e, art)
+                }
+              />
             </div>
           </div>
         ))}

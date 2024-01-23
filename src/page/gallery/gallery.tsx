@@ -10,9 +10,9 @@ export type ArtworkType = {
   name?: string | undefined;
   artist?:
     | {
-        name: string;
+        displayName: string;
         email: string;
-        image: string;
+        photoURL?: string;
         about?: string | undefined;
       }
     | undefined;
@@ -20,6 +20,7 @@ export type ArtworkType = {
   price?: string | undefined;
   description?: string | undefined;
   image?: any;
+  disabled?: boolean;
 };
 
 export type FilterType = {
@@ -43,7 +44,6 @@ const Gallery: React.FC = () => {
     if (allArtwork.length) {
       const collNames = allArtwork.map((artwork) => artwork.collection || "");
       const uniqueCollections = ["All", ...new Set(collNames)];
-      setArtworks([...allArtwork]);
       setCollections(uniqueCollections);
     }
   }, [allArtwork]);
@@ -54,7 +54,9 @@ const Gallery: React.FC = () => {
         (x) => x.collection === filters.collection
       );
       setArtworks(
-        filters.collection === "All" ? allArtwork : [...filterByCollection]
+        filters.collection === "All"
+          ? allArtwork.filter((x) => !x.disabled)
+          : [...filterByCollection]
       );
     }
   }, [allArtwork, filters]);
@@ -102,7 +104,7 @@ const Gallery: React.FC = () => {
             <img src={art.image} alt="" />
             <div className="art-description">
               <div className="artist">
-                <b>{art.name}</b> By {art.artist?.name}
+                <b>{art.name}</b> By {art.artist?.displayName}
               </div>
               <div className="collection">{art.collection}</div>
               <div className="price">{art.price}</div>

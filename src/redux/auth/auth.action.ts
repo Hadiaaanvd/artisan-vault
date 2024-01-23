@@ -8,7 +8,7 @@ export const setCurrentUser = (user: {
   email?: string;
   authLoaded: boolean;
   authenticated: boolean;
-  photoURL?: string;
+  photoUrl?: string;
 }) => ({
   type: "SET_CURRENT_USER",
   payload: user,
@@ -26,7 +26,14 @@ export const updateArtistInfo =
     try {
       const result = await updateArtistAbout(userData);
       const resp = result.data;
-      console.log("resp", resp);
+      if (resp.success) {
+        dispatch({
+          type: "UPDATE_USER_LOADING",
+          payload: { loading: false, success: true, error: null },
+        });
+      } else {
+        throw resp;
+      }
     } catch (error: any) {
       dispatch({
         type: "UPDATE_USER_LOADING",

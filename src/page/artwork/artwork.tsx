@@ -46,11 +46,11 @@ const Artwork: React.FC = () => {
             </div>
 
             <div className="artist-container">
-              <img src={artwork.artist?.image || profile} alt="" />
+              <img src={artwork.artist?.photoURL || profile} alt="" />
               <div>
                 <b>About the Artist</b>
                 <div>
-                  <b>{artwork.artist?.name}</b>
+                  <b>{artwork.artist?.displayName}</b>
                 </div>
                 <div>{artwork.artist?.about || ""}</div>
               </div>
@@ -69,7 +69,7 @@ const Artwork: React.FC = () => {
                         <div>{x.name}</div>
                       </div>
                     ))
-                  : null}
+                  : "No other arkworks from this collection"}
               </div>
             </div>
           </div>

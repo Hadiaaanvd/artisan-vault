@@ -6,7 +6,7 @@
   border-radius: 9px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   .about-form-header {
     display: flex;
     justify-content: space-between;
@@ -21,13 +21,13 @@
     display: flex;
     align-items: center;
     gap: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     .profile-fields-container {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 20px;
     }
   }
 }

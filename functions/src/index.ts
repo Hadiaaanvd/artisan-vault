@@ -59,40 +59,38 @@ exports.updateArtistAbout = functions.https.onCall(
         );
       }
 
-      let userDetails: userType = {
-        about: data.about,
-        displayName: data.displayName,
-      };
+      let userDetails: userType = data;
 
       if (data.photoURL) {
-        const imageResponse = await imageValidationAndUpload(data.photoURL);
-        if (imageResponse.success) {
-          userDetails.photoURL = imageResponse.url;
+        if (/^https?:\/\/.*/.test(data.photoURL)) {
+          userDetails.photoURL = data.photoURL;
+
+          console.log("data is a url");
         } else {
-          throw new functions.https.HttpsError(
-            "invalid-argument",
-            "Image validation failed."
-          );
+          const imageResponse = await imageValidationAndUpload(data.photoURL);
+          if (imageResponse.success) {
+            userDetails.photoURL = imageResponse.url;
+          } else {
+            throw new functions.https.HttpsError(
+              "invalid-argument",
+              "Image validation failed."
+            );
+          }
         }
       }
-
-      // Update user details
       await userRef.update({ ...userDetails });
 
-      // Now update the Artwork collection
       const artworks = await db
         .collection("Artwork")
         .where("artist.email", "==", data.email)
         .get();
 
-      // Batch write to update artist details in Artwork documents
       let batch = db.batch();
       artworks.forEach((artwork: { id: string }) => {
         let artworkRef = db.collection("Artwork").doc(artwork.id);
-        batch.update(artworkRef, { ...userDetails });
+        batch.update(artworkRef, { artist: { ...userDetails } });
       });
 
-      // Commit the batch update
       await batch.commit();
 
       return { success: true };
@@ -103,7 +101,32 @@ exports.updateArtistAbout = functions.https.onCall(
   }
 );
 
-//common functions
+exports.updateArtworkStatus = functions.https.onCall(
+  async (data: { id: string; disabled: boolean }, context: contextType) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "The function must be called while authenticated."
+      );
+    }
+
+    const { id, disabled } = data;
+
+    try {
+      const artworkRef = db.collection("Artwork").doc(id);
+      await artworkRef.update({ disabled });
+      return { success: true };
+    } catch (error) {
+      console.error("Error updating artwork disabled status:", error);
+      throw new functions.https.HttpsError(
+        "unknown",
+        "Failed to update artwork status"
+      );
+    }
+  }
+);
+
+//Common functions/ Utils
 const validateImageFile = async (size: number, type: string) => {
   const validTypes = [
     "image/jpeg",
@@ -131,17 +154,14 @@ const imageValidationAndUpload = async (image: string) => {
       throw new Error("No image found.");
     }
 
-    // Get the default bucket
     const bucket = admin.storage().bucket();
 
-    // Extract MIME type using a more robust and simpler regex
     const matches = image.match(/^data:(.*);base64,/);
     const mimeType = matches && matches[1] ? matches[1] : null;
     if (!mimeType) {
       throw new Error("Invalid image data.");
     }
 
-    // Get file extension
     let fileExtension;
     if (mimeType === "image/jpeg" || mimeType === "image/jpg") {
       fileExtension = "jpg";
@@ -156,13 +176,10 @@ const imageValidationAndUpload = async (image: string) => {
 
     const fileName = `${nanoid()}.${fileExtension}`;
 
-    // Remove the base64 image header
     const base64EncodedImageString = image.replace(/^data:.*;base64,/, "");
 
-    // Convert base64 string to a Buffer
     const imageBuffer = Buffer.from(base64EncodedImageString, "base64");
 
-    // Validate the image file (function not shown)
     const result = await validateImageFile(imageBuffer.length, mimeType);
 
     if (result.success) {

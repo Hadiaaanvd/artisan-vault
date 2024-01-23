@@ -1,0 +1,26 @@
+.artist-individual-artwork-page {
+  width: 100%;
+  border: 1px solid rgb(215, 215, 215);
+  width: 100%;
+  min-height: 100%;
+  padding: 30px;
+  border-radius: 9px;
+  .art-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .artwork-header {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    span {
+      cursor: pointer;
+      text-decoration: underline;
+      margin-right: 10px;
+      &:hover {
+        color: rgb(255, 255, 255);
+      }
+    }
+  }
+}

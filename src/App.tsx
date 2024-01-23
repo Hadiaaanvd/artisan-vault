@@ -16,6 +16,7 @@ import ArtistAbout from "./page/artist-about/artist-about";
 import ArtistArtwork from "./page/artist-artwork/artist-artwork";
 
 import "./App.scss";
+import ArtistIndividualArtwork from "./page/artist-individual-artwork/artist-individual-artwork";
 
 export type authType = {
   currentUser: UserType;
@@ -101,6 +102,10 @@ const App: React.FC = () => {
               <Routes>
                 <Route path="/artist" element={<ArtistAbout />} />
                 <Route path="/artist/artwork" element={<ArtistArtwork />} />
+                <Route
+                  path="/artist/artwork/:id"
+                  element={<ArtistIndividualArtwork />}
+                />
                 <Route path="*" element={<Navigate to="/artist" />} />
               </Routes>
             </div>

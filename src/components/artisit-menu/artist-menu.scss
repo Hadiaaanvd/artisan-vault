@@ -3,13 +3,14 @@
   top: 0px;
   position: sticky;
   left: 0;
-  width: 280px;
+  min-width: 280px;
 
   .artist-menu-content-container {
-    position: relative;
+    position: fixed;
     display: flex;
     padding: 30px 20px;
     border-radius: 9px;
+    width: 240px;
     background-color: rgba(255, 255, 255, 0.2);
     height: calc(100vh - 100px);
     flex-direction: column;

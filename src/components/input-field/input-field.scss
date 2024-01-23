@@ -1,19 +1,26 @@
 .input-field-component {
-  width: 100%;
-  padding: 15px;
-  box-sizing: border-box;
-  border: 1px solid #eee;
-  border-radius: 4px;
-  color: white;
-  background-color: transparent;
-  &:disabled {
-    background-color: rgba(86, 86, 86, 0.572);
-  }
-  &::placeholder {
-    color: #999;
-  }
+  font-size: 12px;
+  font-weight: 600;
 
-  &:focus {
-    outline: none;
+  textarea,
+  input {
+    margin-top: 5px;
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    color: white;
+    background-color: transparent;
+    &:disabled {
+      background-color: rgba(86, 86, 86, 0.572);
+    }
+    &::placeholder {
+      color: #999;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 }

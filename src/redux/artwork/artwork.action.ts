@@ -65,3 +65,29 @@ export const fetchArtworks =
       });
     }
   };
+
+export const updateArtworkStatus =
+  (id?: string, disabled?: boolean): AppThunk =>
+  async (dispatch, getState, { getFirebase, getFirestore }) => {
+    dispatch({
+      type: "SET_ARTWORK_STATUS_LOADING",
+      payload: { loading: true, success: false, error: null },
+    });
+    const db = getFirebase();
+    try {
+      const updateArtworkStatus = db
+        .functions()
+        .httpsCallable("updateArtworkStatus");
+      await updateArtworkStatus({ id, disabled });
+    } catch (err: any) {
+      console.log(err.message);
+      dispatch({
+        type: "SET_ARTWORK_STATUS_LOADING",
+        payload: {
+          loading: false,
+          success: true,
+          error: err.message,
+        },
+      });
+    }
+  };

@@ -12,7 +12,9 @@ import ImagePreviewerAndEdit from "../../image-edit-preview/image-edit-preview";
 
 const ArtistAbout: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [error, setError] = useState<{}>({});
+  const [error, setError] = useState<{ file: string | boolean }>({
+    file: false,
+  });
 
   const { currentUser, updateUserLoading } = useSelector(
     (state: { auth: authType }) => state.auth
@@ -36,8 +38,9 @@ const ArtistAbout: React.FC = () => {
 
   // Handle the submission of the form
   const handleSubmit = () => {
-    console.log(editUser);
-    dispatch(updateArtistInfo(editUser));
+    if (!error.file) {
+      dispatch(updateArtistInfo(editUser));
+    }
   };
 
   return (
@@ -62,12 +65,12 @@ const ArtistAbout: React.FC = () => {
       </div>
       <div className="profile-section">
         <ImagePreviewerAndEdit
-          setError={setError}
+          setError={(value) => setError({ file: value })}
           setFile={(value) => setEditUser({ ...editUser, photoURL: value })}
           file={editUser.photoURL || ""}
         />
         <div className="profile-fields-container">
-          <InputField placeholder="Email" value={editUser.email} disabled />
+          <InputField value={editUser.email} disabled />
           <InputField
             placeholder="Name"
             value={editUser.displayName}

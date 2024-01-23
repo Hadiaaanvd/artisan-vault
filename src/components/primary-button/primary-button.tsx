@@ -4,7 +4,7 @@ import Loader from "../loader/loader";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  loading: {};
+  loading?: {};
 }
 
 const PrimaryButton: React.FC<ButtonProps> = ({

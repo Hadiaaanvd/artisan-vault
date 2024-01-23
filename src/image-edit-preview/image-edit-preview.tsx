@@ -8,12 +8,14 @@ import "./image-edit-preview.scss";
 interface ImagePreviewerAndEditProps {
   setError: (error: string | boolean) => void;
   file: string;
+  cover?: boolean;
   setFile: (file: string) => void;
   edit?: boolean;
 }
 
 const ImagePreviewerAndEdit: React.FC<ImagePreviewerAndEditProps> = ({
   setError,
+  cover,
   file,
   setFile,
 }) => {
@@ -60,7 +62,9 @@ const ImagePreviewerAndEdit: React.FC<ImagePreviewerAndEditProps> = ({
 
   return (
     <div
-      className={`image-preview-edit-component ${file ? "image-exists" : ""}`}
+      className={`image-preview-edit-component ${file ? "image-exists" : ""} ${
+        cover ? "cover-image" : ""
+      }`}
       onClick={handleEdit}
     >
       <img src={file || ImagePreviewIcon} alt="preview" />
