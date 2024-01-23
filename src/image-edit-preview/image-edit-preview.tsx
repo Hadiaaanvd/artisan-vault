@@ -6,7 +6,7 @@ import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import "./image-edit-preview.scss";
 
 interface ImagePreviewerAndEditProps {
-  setError: (error: string | boolean) => void;
+  setError: (err: any) => void;
   file: string;
   cover?: boolean;
   setFile: (file: string) => void;
@@ -51,7 +51,9 @@ const ImagePreviewerAndEdit: React.FC<ImagePreviewerAndEditProps> = ({
   };
 
   const removeImage = (e?: React.MouseEvent<SVGElement>) => {
-    if (e) e.stopPropagation();
+    if (e) {
+      e.stopPropagation();
+    }
     setFile("");
     if (inputRef.current) inputRef.current.value = "";
   };

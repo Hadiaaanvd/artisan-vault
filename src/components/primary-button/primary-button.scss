@@ -13,7 +13,9 @@
   white-space: nowrap;
   background-color: rgba(86, 86, 86, 0.572);
   transition: background-color 0.3s, box-shadow 0.3s;
-
+  &.no-background {
+    background-color: transparent;
+  }
   &:hover {
     background-color: rgba(207, 207, 207, 0.4);
   }

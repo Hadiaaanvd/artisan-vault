@@ -17,8 +17,7 @@ const Auth: React.FC = () => {
       prompt: "select_account",
     });
     try {
-      const authResult = await firebase.auth().signInWithPopup(provider);
-      console.log(authResult);
+      await firebase.auth().signInWithPopup(provider);
     } catch (err: any) {
       console.log(err.message);
       setErrMessage(err.message);

@@ -3,9 +3,27 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import profile from "../../assets/profile.jpg";
-import { ArtworkType } from "../gallery/gallery";
 
 import "./artwork.scss";
+import Navbar from "../../components/navbar/navbar";
+
+export type ArtworkType = {
+  id?: string;
+  name?: string | undefined;
+  artist?:
+    | {
+        displayName: string;
+        email: string;
+        photoURL?: string;
+        about?: string | undefined;
+      }
+    | undefined;
+  collection?: string;
+  price?: string | undefined;
+  description?: string | undefined;
+  image?: any;
+  disabled?: boolean;
+};
 
 const Artwork: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +48,7 @@ const Artwork: React.FC = () => {
 
   return (
     <div className="artwork-page">
+      <Navbar />
       {Object.keys(artwork).length ? (
         <div className="art-container">
           <div className="image-container">

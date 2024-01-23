@@ -12,8 +12,8 @@ import ImagePreviewerAndEdit from "../../image-edit-preview/image-edit-preview";
 
 const ArtistAbout: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [error, setError] = useState<{ file: string | boolean }>({
-    file: false,
+  const [error, setError] = useState<{ file: any }>({
+    file: "",
   });
 
   const { currentUser, updateUserLoading } = useSelector(
@@ -84,6 +84,8 @@ const ArtistAbout: React.FC = () => {
         placeholder="Tell the world about your artistic journey. Share the inspiration behind your work, the concepts you explore, and what drives your creative process.."
         onChange={(value) => handleChange("about", value)}
       />
+
+      <span className="error">{error.file}</span>
     </div>
   );
 };

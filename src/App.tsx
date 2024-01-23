@@ -10,14 +10,12 @@ import { setCurrentUser } from "./redux/auth/auth.action";
 import Auth from "./page/auth/auth";
 import Artwork from "./page/artwork/artwork";
 import Gallery from "./page/gallery/gallery";
-import Navbar from "./components/navbar/navbar";
 import ArtistMenu from "./components/artisit-menu/artist-menu";
 import ArtistAbout from "./page/artist-about/artist-about";
 import ArtistArtwork from "./page/artist-artwork/artist-artwork";
-
-import "./App.scss";
 import ArtistIndividualArtwork from "./page/artist-individual-artwork/artist-individual-artwork";
 
+import "./App.scss";
 export type authType = {
   currentUser: UserType;
   updateUserLoading: { loading: boolean; success: boolean; error: any };
@@ -88,7 +86,6 @@ const App: React.FC = () => {
         {currentUser.authLoaded ? (
           !currentUser.authenticated ? (
             <div className="public-routes">
-              <Navbar />
               <Routes>
                 <Route path="/" element={<Gallery />} />
                 <Route path="/sign-in" element={<Auth />} />

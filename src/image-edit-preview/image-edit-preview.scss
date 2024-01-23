@@ -3,18 +3,20 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
   height: 100px;
   border-radius: 50%;
   background-color: rgba(86, 86, 86, 0.572);
   &.image-exists {
     position: relative;
     img {
-      width: 100%;
+      min-width: 100% !important;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
     }
+
     &:hover {
       opacity: 0.8;
       .icon-button-container {
@@ -22,16 +24,16 @@
       }
     }
   }
-
   &.cover-image {
     height: 300px;
     min-width: 100%;
-    border-radius: 9px !important;
+    border-radius: 9px;
     img {
-      min-width: 100px !important;
+      min-width: 50px;
       border-radius: 9px;
     }
   }
+
   .icon-button-container {
     cursor: pointer;
     position: absolute;

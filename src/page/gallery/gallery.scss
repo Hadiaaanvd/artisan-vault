@@ -1,6 +1,7 @@
 .gallery-page {
   width: 100%;
   min-height: calc(100vh - 107px);
+
   .filter-containers {
     margin-top: 2rem;
     display: flex;
@@ -11,14 +12,9 @@
   .collections-filters {
     display: flex;
     gap: 5px;
-    .collection {
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      &:hover,
-      &.active {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
+    .primary-button-component {
+      width: fit-content;
+      padding: 13px 20px;
     }
   }
   .other-filters {

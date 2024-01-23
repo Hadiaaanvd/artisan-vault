@@ -64,8 +64,6 @@ exports.updateArtistAbout = functions.https.onCall(
       if (data.photoURL) {
         if (/^https?:\/\/.*/.test(data.photoURL)) {
           userDetails.photoURL = data.photoURL;
-
-          console.log("data is a url");
         } else {
           const imageResponse = await imageValidationAndUpload(data.photoURL);
           if (imageResponse.success) {
@@ -85,6 +83,8 @@ exports.updateArtistAbout = functions.https.onCall(
         .where("artist.email", "==", data.email)
         .get();
 
+      console.log("artworks", JSON.stringify(artworks));
+
       let batch = db.batch();
       artworks.forEach((artwork: { id: string }) => {
         let artworkRef = db.collection("Artwork").doc(artwork.id);
@@ -96,7 +96,7 @@ exports.updateArtistAbout = functions.https.onCall(
       return { success: true };
     } catch (err: any) {
       console.error(err);
-      throw new functions.https.HttpsError("unknown", err.message);
+      return { success: false, message: err.message };
     }
   }
 );
@@ -116,12 +116,46 @@ exports.updateArtworkStatus = functions.https.onCall(
       const artworkRef = db.collection("Artwork").doc(id);
       await artworkRef.update({ disabled });
       return { success: true };
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error updating artwork disabled status:", error);
+      return { success: false, message: error.message };
+    }
+  }
+);
+
+exports.updateArtwork = functions.https.onCall(
+  async (data: any, context: contextType) => {
+    if (!context.auth) {
       throw new functions.https.HttpsError(
-        "unknown",
-        "Failed to update artwork status"
+        "unauthenticated",
+        "The function must be called while authenticated."
       );
+    }
+    if (
+      !data.id ||
+      !data.name ||
+      !data.description ||
+      !data.price ||
+      !data.collection
+    ) {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "Missing about information."
+      );
+    }
+    const { id } = data;
+    try {
+      const artworkRef = db.collection("Artwork").doc(id);
+      await artworkRef.update({
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        collection: data.collection,
+      });
+      return { success: true };
+    } catch (error: any) {
+      console.error("Error updating artwork:", error);
+      return { success: false, message: error.message };
     }
   }
 );

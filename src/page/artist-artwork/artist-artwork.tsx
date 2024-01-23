@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Toggle from "react-toggle";
 import { useSelector, useDispatch } from "react-redux";
-import { ArtworkType, FilterType } from "../gallery/gallery";
+import { FilterType } from "../gallery/gallery";
 import { authType } from "../../App";
-import "react-toggle/style.css";
-import "./artist-artwork.scss";
 import { AppDispatch } from "../../redux/store";
 import { updateArtworkStatus } from "../../redux/artwork/artwork.action";
 import { useNavigate } from "react-router-dom";
+import { ArtworkType } from "../artwork/artwork";
 
-type mouseEvent = React.MouseEvent<HTMLButtonElement>;
+import Toggle from "react-toggle";
+import "./artist-artwork.scss";
+import "react-toggle/style.css";
 const ArtistArtwork: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -29,8 +29,6 @@ const ArtistArtwork: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement>,
     artwork: ArtworkType
   ) => {
-    e.stopPropagation();
-    e.preventDefault();
     dispatch(updateArtworkStatus(artwork.id, !artwork.disabled));
   };
 
@@ -39,7 +37,6 @@ const ArtistArtwork: React.FC = () => {
       const collNames = allArtwork
         .filter((x) => x.artist?.email === currentUser.email)
         .map((artwork) => artwork.collection || "");
-      console.log(allArtwork);
       const uniqueCollections = ["All", ...new Set(collNames)];
       setCollections(uniqueCollections);
     }
@@ -96,12 +93,9 @@ const ArtistArtwork: React.FC = () => {
             onClick={() => navigate(`/artist/artwork/${art.id}`)}
           >
             <img src={art.image} alt="" />
-
             <div className="art-description">
               <div>
-                <div className="artist">
-                  <b>{art.name}</b>
-                </div>
+                <div className="artist">{art.name}</div>
                 <div className="collection">{art.collection}</div>
                 <div className="price">{art.price}</div>
               </div>

@@ -3,7 +3,12 @@ import logo from "../../assets/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import "./navbar.scss";
-const Navbar: React.FC = () => {
+
+type NavbarProps = {
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ handleChange }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +31,12 @@ const Navbar: React.FC = () => {
           alt="Logo"
         />
         {location.pathname === "/" && (
-          <input type="text" className="search-field" placeholder="Search.." />
+          <input
+            type="text"
+            onChange={handleChange}
+            className="search-field"
+            placeholder="Search.."
+          />
         )}
         <div className={`nav-menu ${isOpen ? "open" : ""}`}>
           <ul>
