@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import firebase from "../../firebase";
 import logo from "../../assets/logo.png";
 import { ReactComponent as Google } from "../../assets/google.svg";
+import Navbar from "../../components/navbar/navbar";
 
 import "./auth.scss";
 
@@ -24,18 +25,26 @@ const Auth: React.FC = () => {
     }
   };
   return (
-    <div className="auth-page">
-      <div className="signin-container">
-        <img onClick={() => navigate("/")} className="logo" src={logo} alt="" />
+    <div>
+      <Navbar />
+      <div className="auth-page">
+        <div className="signin-container">
+          <img
+            onClick={() => navigate("/")}
+            className="logo"
+            src={logo}
+            alt=""
+          />
 
-        <div className="google-button-container">
-          Begin your creative journey with Artisan Vault. Click below to access
-          your account with Google and add your masterpieces in our exclusive
-          gallery.
-          <div className="google-button" onClick={() => googleAuth()}>
-            <Google /> Signin with Google
+          <div className="google-button-container">
+            Begin your creative journey with Artisan Vault. Click below to
+            access your account with Google and add your masterpieces in our
+            exclusive gallery.
+            <div className="google-button" onClick={() => googleAuth()}>
+              <Google /> Signin with Google
+            </div>
+            <p className="error-message">{errMessage}</p>
           </div>
-          <p className="error-message">{errMessage}</p>
         </div>
       </div>
     </div>
