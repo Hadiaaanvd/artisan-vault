@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Artisan Vault
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Artisan Vault is a digital platform where artists can showcase their artwork. Artists can upload their pieces along with details such as name, description, image, and price in ETH. Users can view a wide array of art, and future functionality will include the ability to purchase art directly through the platform with blockchain integration.
 
-In the project directory, you can run:
 
-### `npm start`
+## Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Artist authentication and profile management
+- Artwork upload with details (name, description, image, price in ETH)
+- Artwork visibility management (enable/disable)
+- Profile information updates for artists
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Frontend: React with TypeScript
+- Backend: Firebase with Cloud Functions
+- Authentication: Firebase Authentication
+- Database: Firestore
+- Hosting: Firebase Hosting
+- Storage: Firebase Storage
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
+- Node.js (LTS version)
+- npm or Yarn (latest version)
+- Firebase CLI (Install with `npm install -g firebase-tools`)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+To get started with the Artisan Vault app, follow these steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repository to your local machine:
+git clone [https://github.com/yourusername/artisan-vault.git](https://github.com/Hadiaaanvd/artisan-vault.git)
+cd artisan-vault
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Install the necessary dependencies:
+yarn or npm install 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Start the development server:
+yarn start or npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Visit (http://localhost:3000) in your browser to view the app.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Scripts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `npm start` - Starts the development server.
+- `npm test` - Runs tests in interactive watch mode.
+- `npm run build` - Compiles and bundles the React app for production deployment.
+- `npm run eject` - **Note: This is irreversible.** Ejects the app from the create-react-app build script.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Deployment
 
-### Analyzing the Bundle Size
+To deploy the app, after building it using `npm run build` or `yarn build`, follow the instructions provided by your hosting service. For Firebase Hosting, the Firebase CLI can be used to deploy the app.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+To deploy specific services, such as Firestore rules, functions, or hosting, you can use the following command: firebase deploy --only firestore:rules, functions, hosting
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+## Future Enhancements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Blockchain integration for secure and transparent transactions
+- Wallet integration for processing payments and managing art ownership
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contact
 
-### `npm run build` fails to minify
+For any inquiries or contributions, please contact:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Hadia Naveed
+- **Email**: hadiaaanvd@gmail.com
+
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or create an issue for bugs, questions, or new features.
+
+
+## License
+
+This project is open source and available under the [MIT License](https://opensource.org/license/mit/).
+
+
