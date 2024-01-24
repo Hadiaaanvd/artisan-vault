@@ -44,7 +44,8 @@
     svg {
       width: 30px;
       path {
-        stroke: white;
+        filter: brightness(1.5);
+        stroke: rgb(255, 255, 255);
       }
     }
   }

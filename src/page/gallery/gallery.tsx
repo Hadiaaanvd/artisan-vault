@@ -13,7 +13,7 @@ import "./gallery.scss";
 export type FilterType = { artist?: string; collection?: string };
 type artType = { art: { artwork: ArtworkType[] } };
 const initialFilters = { collection: "All", artist: "All" };
-const searchableKeys = ["name", "collection", "price", "artist.displayName"];
+const searchableKeys = ["name", "collection", "price", "artist.displayName"]; //keys that fuse.js is going to search on
 
 const Gallery: React.FC = () => {
   const navigate = useNavigate();
@@ -24,19 +24,19 @@ const Gallery: React.FC = () => {
   const [filters, setFilters] = useState<FilterType>(initialFilters);
   const fuse = new Fuse(allArtwork, { keys: searchableKeys });
 
+  //get artists and collections for filters
   useEffect(() => {
     if (allArtwork.length) {
       const collNames = allArtwork.map((artwork) => artwork.collection || "");
       const artistNames = allArtwork.map(
         (artwork) => artwork.artist?.displayName || ""
       );
-      const uniqueCollections = ["All", ...new Set(collNames)];
-      const uniqueArtists = ["All", ...new Set(artistNames)];
-      setCollections(uniqueCollections);
-      setArtists(uniqueArtists);
+      setCollections(["All", ...new Set(collNames)]);
+      setArtists(["All", ...new Set(artistNames)]);
     }
   }, [allArtwork]);
 
+  //update artworks on the basis of chosen collection/artist filters
   useEffect(() => {
     if (allArtwork.length) {
       let filteredArtwork = allArtwork.filter((x) => !x.disabled);
@@ -54,7 +54,8 @@ const Gallery: React.FC = () => {
     }
   }, [allArtwork, filters]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //Search capability using fuse.js on the basis of keys specified
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     const initialArtworks =
       filters.collection !== "All"
@@ -63,7 +64,7 @@ const Gallery: React.FC = () => {
     if (value.trim() !== "") {
       const results = fuse.search(value).map((result) => result.item);
       setArtworks(results);
-    } else setArtworks([...initialArtworks]);
+    } else setArtworks([...initialArtworks]); // return all artworks if searchbar is empty
   };
 
   const redirect = (id: string) => {
@@ -72,7 +73,7 @@ const Gallery: React.FC = () => {
 
   return (
     <div className="gallery-page">
-      <Navbar handleChange={handleChange} />
+      <Navbar handleSearch={handleSearch} />
       <div className="filter-containers">
         <div className="collections-filters">
           {collections.map((coll, index: number) => (
@@ -91,7 +92,6 @@ const Gallery: React.FC = () => {
             value={filters.artist || ""}
             handleChange={(value) => setFilters({ ...filters, artist: value })}
           />
-
           <Filter />
         </div>
       </div>

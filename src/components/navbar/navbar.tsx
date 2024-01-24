@@ -5,10 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./navbar.scss";
 
 type NavbarProps = {
-  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ handleChange }) => {
+const Navbar: React.FC<NavbarProps> = ({ handleSearch }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -25,10 +25,10 @@ const Navbar: React.FC<NavbarProps> = ({ handleChange }) => {
           onClick={() => navigate("/")}
           alt="Logo"
         />
-        {location.pathname === "/" && (
+        {handleSearch && (
           <input
             type="text"
-            onChange={handleChange}
+            onChange={handleSearch}
             className="search-field"
             placeholder="Search.."
           />

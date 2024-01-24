@@ -37,26 +37,19 @@ const ArtistArtwork: React.FC = () => {
       const collNames = allArtwork
         .filter((x) => x.artist?.email === currentUser.email)
         .map((artwork) => artwork.collection || "");
-      const uniqueCollections = ["All", ...new Set(collNames)];
-      setCollections(uniqueCollections);
+      setCollections(["All", ...new Set(collNames)]);
     }
   }, [allArtwork, currentUser]);
 
   useEffect(() => {
     if (allArtwork.length) {
-      const userArt = allArtwork.filter((artwork) => {
-        if (
-          artwork.artist?.email === currentUser.email &&
-          filters.collection === "All"
-        )
-          return artwork;
-        else if (
-          artwork.artist?.email === currentUser.email &&
-          filters.collection === artwork.collection
-        )
-          return artwork;
-        else return [];
-      });
+      let userArt = allArtwork.filter(
+        (art) => art.artist?.email === currentUser.email
+      );
+
+      if (filters.collection !== "All") {
+        userArt = userArt.filter((x) => x.collection === filters.collection);
+      }
       setArtworks([...userArt]);
     }
   }, [allArtwork, filters, currentUser]);
@@ -64,26 +57,36 @@ const ArtistArtwork: React.FC = () => {
   const updateFilters = (filter: FilterType) => {
     setFilters({ ...filters, ...filter });
   };
+
+  const redirectToCreate = () => navigate("/artist/artwork/create");
+
   return (
     <div className="artist-artwork-page">
       <div className="artist-artwork-header">
         <h2>
           Gallery of Visions: The Curated Art of {currentUser.displayName}
         </h2>
-        <button>+ Add Artwork</button>
+        <button onClick={redirectToCreate}>+ Add Artwork</button>
       </div>
       <div className="collections-filters">
-        {collections.map((coll, index: number) => (
-          <div
-            className={`collection ${
-              coll === filters.collection ? "active" : ""
-            }`}
-            onClick={() => updateFilters({ collection: coll })}
-            key={index}
-          >
-            {coll}
-          </div>
-        ))}
+        {artworks.length ? (
+          collections.map((coll, index: number) => (
+            <div
+              className={`collection ${
+                coll === filters.collection ? "active" : ""
+              }`}
+              onClick={() => updateFilters({ collection: coll })}
+              key={index}
+            >
+              {coll}
+            </div>
+          ))
+        ) : (
+          <span>
+            You haven't any artwork for display. Click&nbsp;
+            <u onClick={redirectToCreate}>here</u> to add an artwork.
+          </span>
+        )}
       </div>
       <div className="artworks-container">
         {artworks.map((art: ArtworkType, index: number) => (
@@ -101,7 +104,7 @@ const ArtistArtwork: React.FC = () => {
               </div>
               <Toggle
                 icons={false}
-                defaultChecked={!art.disabled} // Assuming 'disabled' is a boolean
+                defaultChecked={!art.disabled}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   handleToggle(e, art)
                 }

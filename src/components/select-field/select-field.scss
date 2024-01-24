@@ -1,6 +1,7 @@
 .select-field-component {
   position: relative;
   width: fit-content;
+  font-size: 14px;
   .dropdown-field {
     align-items: center;
     cursor: pointer;
@@ -29,14 +30,14 @@
     top: 110%;
     padding: 10px 0;
     border-radius: 5px;
-    background-color: rgb(71, 71, 71);
+    background-color: rgba(87, 87, 87, 0.882);
     .option-item {
       font-weight: 600;
       text-align: right;
       padding: 5px 20px;
       cursor: pointer;
       &:hover {
-        background-color: rgba(133, 133, 133, 0.235);
+        background-color: rgba(158, 158, 158, 0.235);
       }
     }
   }

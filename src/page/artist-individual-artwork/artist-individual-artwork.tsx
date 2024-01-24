@@ -8,6 +8,7 @@ import InputField from "../../components/input-field/input-field";
 import PrimaryButton from "../../components/primary-button/primary-button";
 
 import "./artist-individual-artwork.scss";
+import { authType } from "../../App";
 const ArtistIndividualArtwork: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,8 +23,9 @@ const ArtistIndividualArtwork: React.FC = () => {
   const allArtwork = useSelector(
     (state: { art: { artwork: ArtworkType[] } }) => state.art.artwork
   );
-
-  console.log(error);
+  const { currentUser } = useSelector(
+    (state: { auth: authType }) => state.auth
+  );
 
   useEffect(() => {
     if (allArtwork.length) {
@@ -41,7 +43,7 @@ const ArtistIndividualArtwork: React.FC = () => {
       <div className="artwork-header">
         <h2>
           <span onClick={() => navigate("/artist/artwork")}>Artworks</span>
-          &gt; {form.name} By {form?.artist?.displayName}
+          &gt; {form.name} By {currentUser.displayName}
         </h2>
         <PrimaryButton
         // disabled={updateUserLoading.loading}
@@ -51,38 +53,37 @@ const ArtistIndividualArtwork: React.FC = () => {
           Update
         </PrimaryButton>
       </div>
-      {Object.keys(form).length ? (
-        <div className="art-content-container">
-          <ImagePreviewerAndEdit
-            cover
-            setError={(err) => setError({ ...err, file: err })}
-            setFile={(file) => handleInputChange("image", file)}
-            file={form.image || ""}
-          />
-          <span className="error">{error.file}</span>
-          <InputField
-            label="Name"
-            value={form.name}
-            onChange={(value) => handleInputChange("name", value)}
-          />
-          <InputField
-            label="Email"
-            value={form.collection}
-            onChange={(value) => handleInputChange("collection", value)}
-          />
-          <InputField
-            onChange={(value) => handleInputChange("price", value)}
-            label="Price"
-            value={form.price}
-          />
-          <InputField
-            onChange={(value) => handleInputChange("description", value)}
-            label="Description"
-            value={form.description}
-            multiline
-          />
-        </div>
-      ) : null}
+
+      <div className="art-content-container">
+        <ImagePreviewerAndEdit
+          cover
+          setError={(err) => setError({ ...err, file: err })}
+          setFile={(file) => handleInputChange("image", file)}
+          file={form.image || ""}
+        />
+        <span className="error">{error.file}</span>
+        <InputField
+          label="Name"
+          value={form.name}
+          onChange={(value) => handleInputChange("name", value)}
+        />
+        <InputField
+          label="Email"
+          value={form.collection}
+          onChange={(value) => handleInputChange("collection", value)}
+        />
+        <InputField
+          onChange={(value) => handleInputChange("price", value)}
+          label="Price"
+          value={form.price}
+        />
+        <InputField
+          onChange={(value) => handleInputChange("description", value)}
+          label="Description"
+          value={form.description}
+          multiline
+        />
+      </div>
     </div>
   );
 };

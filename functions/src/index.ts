@@ -83,12 +83,10 @@ exports.updateArtistAbout = functions.https.onCall(
         .where("artist.email", "==", data.email)
         .get();
 
-      console.log("artworks", JSON.stringify(artworks));
-
       let batch = db.batch();
-      artworks.forEach((artwork: { id: string }) => {
-        let artworkRef = db.collection("Artwork").doc(artwork.id);
-        batch.update(artworkRef, { artist: { ...userDetails } });
+      artworks.docs.forEach((artworkDoc: { id: string }) => {
+        let artworkRef = db.collection("Artwork").doc(artworkDoc.id);
+        batch.update(artworkRef, { artist: userDetails });
       });
 
       await batch.commit();

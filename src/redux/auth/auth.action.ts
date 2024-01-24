@@ -17,6 +17,7 @@ export const setCurrentUser = (user: {
 export const updateArtistInfo =
   (userData: UserType): AppThunk =>
   async (dispatch, getState, { getFirebase }) => {
+    console.log("hereeee");
     dispatch({
       type: "UPDATE_USER_LOADING",
       payload: { loading: true, success: false, error: null },
@@ -26,6 +27,7 @@ export const updateArtistInfo =
     try {
       const result = await updateArtistAbout(userData);
       const resp = result.data;
+      console.log("resp", resp);
       if (resp.success) {
         dispatch({
           type: "UPDATE_USER_LOADING",
@@ -35,10 +37,10 @@ export const updateArtistInfo =
         throw resp;
       }
     } catch (error: any) {
+      console.error("Error updating user information:", error);
       dispatch({
         type: "UPDATE_USER_LOADING",
         payload: { loading: false, success: false, error: error.message },
       });
-      console.error("Error updating user information:", error);
     }
   };

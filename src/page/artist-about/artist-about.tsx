@@ -38,6 +38,7 @@ const ArtistAbout: React.FC = () => {
 
   // Handle the submission of the form
   const handleSubmit = () => {
+    console.log(editUser);
     if (!error.file) {
       dispatch(updateArtistInfo(editUser));
     }
