@@ -55,16 +55,16 @@
       padding: 30px;
     }
     .art-description {
-      font-size: calc(12px + 0.3vw);
+      font-size: calc(12px + 0.2vw);
       display: flex;
       flex-direction: column;
       gap: 10px;
       .name {
-        font-size: calc(18px + 1vw);
+        font-size: calc(18px + 0.8vw);
       }
       .collection,
       .price {
-        font-size: calc(16px + 0.5vw);
+        font-size: calc(16px + 0.2vw);
         font-weight: bold;
         margin-top: 2px;
       }
@@ -76,7 +76,7 @@
         background-color: rgba(255, 255, 255, 0.1);
         padding: 30px;
         border-radius: 9px;
-        font-size: calc(12px + 0.3vw);
+        font-size: calc(12px + 0.2vw);
         display: flex;
         justify-content: flex-end;
         align-items: center;

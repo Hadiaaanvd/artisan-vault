@@ -6,36 +6,34 @@ import { ArtworkType } from "../artwork/artwork";
 
 import Fuse from "fuse.js";
 import Navbar from "../../components/navbar/navbar";
-
-import "./gallery.scss";
 import PrimaryButton from "../../components/primary-button/primary-button";
+import SelectField from "../../components/select-field/select-field";
+import "./gallery.scss";
 
-export type FilterType = {
-  artist?: string;
-  collection?: string;
-};
+export type FilterType = { artist?: string; collection?: string };
+type artType = { art: { artwork: ArtworkType[] } };
+const initialFilters = { collection: "All", artist: "All" };
+const searchableKeys = ["name", "collection", "price", "artist.displayName"];
 
 const Gallery: React.FC = () => {
   const navigate = useNavigate();
-  const allArtwork = useSelector(
-    (state: { art: { artwork: ArtworkType[] } }) => state.art.artwork
-  );
+  const allArtwork = useSelector((state: artType) => state.art.artwork);
   const [artworks, setArtworks] = useState<ArtworkType[]>([]);
   const [collections, setCollections] = useState<string[]>([]);
-  const [filters, setFilters] = useState<FilterType>({
-    collection: "All",
-    artist: "All",
-  });
-
-  const fuse = new Fuse(allArtwork, {
-    keys: ["name", "collection", "price", "artist.name"],
-  });
+  const [artists, setArtists] = useState<string[]>([]);
+  const [filters, setFilters] = useState<FilterType>(initialFilters);
+  const fuse = new Fuse(allArtwork, { keys: searchableKeys });
 
   useEffect(() => {
     if (allArtwork.length) {
       const collNames = allArtwork.map((artwork) => artwork.collection || "");
+      const artistNames = allArtwork.map(
+        (artwork) => artwork.artist?.displayName || ""
+      );
       const uniqueCollections = ["All", ...new Set(collNames)];
+      const uniqueArtists = ["All", ...new Set(artistNames)];
       setCollections(uniqueCollections);
+      setArtists(uniqueArtists);
     }
   }, [allArtwork]);
 
@@ -47,7 +45,6 @@ const Gallery: React.FC = () => {
           (x) => x.collection === filters.collection
         );
       }
-
       if (filters.artist && filters.artist !== "All") {
         filteredArtwork = filteredArtwork.filter(
           (x) => x.artist?.displayName === filters.artist
@@ -66,13 +63,7 @@ const Gallery: React.FC = () => {
     if (value.trim() !== "") {
       const results = fuse.search(value).map((result) => result.item);
       setArtworks(results);
-    } else {
-      setArtworks([...initialArtworks]);
-    }
-  };
-
-  const updateFilters = (filter: FilterType) => {
-    setFilters({ ...filters, ...filter });
+    } else setArtworks([...initialArtworks]);
   };
 
   const redirect = (id: string) => {
@@ -88,16 +79,19 @@ const Gallery: React.FC = () => {
             <PrimaryButton
               key={index}
               inActive={coll !== filters.collection}
-              onClick={() => updateFilters({ collection: coll })}
+              onClick={() => setFilters({ ...filters, collection: coll })}
             >
               {coll}
             </PrimaryButton>
           ))}
         </div>
         <div className="other-filters">
-          <div className="filter" onClick={() => updateFilters({ artist: "" })}>
-            Artist
-          </div>
+          <SelectField
+            options={artists}
+            value={filters.artist || ""}
+            handleChange={(value) => setFilters({ ...filters, artist: value })}
+          />
+
           <Filter />
         </div>
       </div>
