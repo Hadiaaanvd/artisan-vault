@@ -71,7 +71,7 @@ const ArtistAbout: React.FC = () => {
           file={editUser.photoURL || ""}
         />
         <div className="profile-fields-container">
-          <InputField value={editUser.email} disabled />
+          <InputField value={editUser.email || ""} disabled />
           <InputField
             placeholder="Name"
             value={editUser.displayName}
@@ -81,7 +81,7 @@ const ArtistAbout: React.FC = () => {
       </div>
       <InputField
         multiline
-        value={editUser.about}
+        value={editUser.about || ""}
         placeholder="Tell the world about your artistic journey. Share the inspiration behind your work, the concepts you explore, and what drives your creative process.."
         onChange={(value) => handleChange("about", value)}
       />

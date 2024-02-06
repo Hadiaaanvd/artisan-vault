@@ -5,6 +5,7 @@
   padding: 30px;
   border-radius: 9px;
   .artworks-container {
+    position: relative;
     margin-top: 1rem;
     display: flex;
     gap: 10px;
@@ -42,10 +43,13 @@
         bottom: 0px;
         color: white;
         border-radius: 0 0 9px 9px;
-        .react-toggle {
-          transform: scale(0.8);
-        }
       }
+    }
+    .react-toggle {
+      position: absolute;
+      transform: scale(0.8);
+      right: 0;
+      bottom: 20px;
     }
   }
   .artist-artwork-header {

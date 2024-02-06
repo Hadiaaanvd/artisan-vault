@@ -129,27 +129,41 @@ exports.updateArtwork = functions.https.onCall(
         "The function must be called while authenticated."
       );
     }
-    if (
-      !data.id ||
-      !data.name ||
-      !data.description ||
-      !data.price ||
-      !data.collection
-    ) {
+    const { name, description, price, collection, image } = data;
+    if (!name || !description || !price || !collection || !image) {
       throw new functions.https.HttpsError(
         "invalid-argument",
-        "Missing about information."
+        "Missing some information."
       );
     }
-    const { id } = data;
+
     try {
-      const artworkRef = db.collection("Artwork").doc(id);
-      await artworkRef.update({
+      let artworkImage = "";
+      if (image) {
+        const imageResponse = await imageValidationAndUpload(data.image);
+        if (imageResponse.success) {
+          artworkImage = imageResponse.url;
+        } else {
+          throw new functions.https.HttpsError(
+            "invalid-argument",
+            "Image validation failed."
+          );
+        }
+      }
+      const dataToSave = {
         name: data.name,
+        image: artworkImage,
         description: data.description,
         price: data.price,
         collection: data.collection,
-      });
+        artist: data.artist,
+      };
+      if (data.id) {
+        const artworkRef = db.collection("Artwork").doc(data.id);
+        await artworkRef.update({ ...dataToSave });
+      } else {
+        await db.collection("Artwork").add({ ...dataToSave });
+      }
       return { success: true };
     } catch (error: any) {
       console.error("Error updating artwork:", error);

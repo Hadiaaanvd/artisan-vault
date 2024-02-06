@@ -5,6 +5,11 @@ const INITIAL_STATE = {
     success: false,
     error: null,
   },
+  updateArtworkLoading: {
+    loading: false,
+    success: false,
+    error: null,
+  },
 };
 
 const artworkReducer = (
@@ -16,6 +21,8 @@ const artworkReducer = (
       return { ...state, artwork: action.payload };
     case "SET_ARTWORK_LOADING":
       return { ...state, artworkLoading: action.payload };
+    case "SET_UPDATE_ARTWORK_LOADING":
+      return { ...state, updateArtworkLoading: action.payload };
     default:
       return state;
   }

@@ -4,10 +4,11 @@ import "./input-field.scss";
 interface InputFieldProps {
   placeholder?: string;
   label?: string;
-  value?: string;
+  value: string | "";
   multiline?: boolean;
   disabled?: boolean;
   name?: string;
+  type?: string;
   onChange?: (value: string) => void;
 }
 
@@ -22,6 +23,7 @@ const InputField: React.FC<InputFieldProps> = ({
   onChange,
   disabled,
   multiline,
+  type,
 }) => {
   const handleInputChange = (event: ChangeEvent) => {
     const newValue = event.target.value;
@@ -45,7 +47,7 @@ const InputField: React.FC<InputFieldProps> = ({
       ) : (
         <input
           disabled={disabled}
-          type="text"
+          type={type || "text"}
           placeholder={placeholder}
           value={value}
           onChange={handleInputChange}

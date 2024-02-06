@@ -29,6 +29,7 @@ const ArtistArtwork: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement>,
     artwork: ArtworkType
   ) => {
+    e.stopPropagation();
     dispatch(updateArtworkStatus(artwork.id, !artwork.disabled));
   };
 
@@ -83,33 +84,31 @@ const ArtistArtwork: React.FC = () => {
           ))
         ) : (
           <span>
-            You haven't any artwork for display. Click&nbsp;
+            You haven't added any artwork for display. Click&nbsp;
             <u onClick={redirectToCreate}>here</u> to add an artwork.
           </span>
         )}
       </div>
       <div className="artworks-container">
         {artworks.map((art: ArtworkType, index: number) => (
-          <div
-            className="art-container"
-            key={index}
-            onClick={() => navigate(`/artist/artwork/${art.id}`)}
-          >
-            <img src={art.image} alt="" />
-            <div className="art-description">
-              <div>
-                <div className="artist">{art.name}</div>
-                <div className="collection">{art.collection}</div>
-                <div className="price">{art.price}</div>
+          <div className="art-container" key={index}>
+            <div onClick={() => navigate(`/artist/artwork/${art.id}`)}>
+              <img src={art.image} alt="" />
+              <div className="art-description">
+                <div>
+                  <div className="artist">{art.name}</div>
+                  <div className="collection">{art.collection}</div>
+                  <div className="price">{art.price} ETH</div>
+                </div>
               </div>
-              <Toggle
-                icons={false}
-                defaultChecked={!art.disabled}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  handleToggle(e, art)
-                }
-              />
             </div>
+            <Toggle
+              icons={false}
+              defaultChecked={!art.disabled}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleToggle(e, art)
+              }
+            />
           </div>
         ))}
       </div>

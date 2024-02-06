@@ -60,7 +60,9 @@ const Artwork: React.FC = () => {
                 <b>{artwork.name}</b>
               </div>
               <div className="collection">{artwork.collection}</div>
-              <div className="price">{artwork.price}</div>
+              <div className="price">
+                {artwork.price} <span>ETH</span>
+              </div>
               <div className="description">{artwork.description}</div>
             </div>
 

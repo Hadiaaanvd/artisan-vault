@@ -1,6 +1,7 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
+import { ArtworkType } from "../../page/artwork/artwork";
 
 export type ArtworkData = {
   id: string;
@@ -91,3 +92,40 @@ export const updateArtworkStatus =
       });
     }
   };
+export const updateArtworkDetails =
+  (data?: ArtworkType, disabled?: boolean): AppThunk =>
+  async (dispatch, getState, { getFirebase, getFirestore }) => {
+    console.log(data);
+    dispatch({
+      type: "SET_UPDATE_ARTWORK_LOADING",
+      payload: { loading: true, success: false, error: null },
+    });
+    const db = getFirebase();
+    try {
+      const updateArtwork = db.functions().httpsCallable("updateArtwork");
+      await updateArtwork(data);
+      dispatch({
+        type: "SET_UPDATE_ARTWORK_LOADING",
+        payload: {
+          loading: false,
+          success: true,
+          error: false,
+        },
+      });
+    } catch (err: any) {
+      console.log(err.message);
+      dispatch({
+        type: "SET_UPDATE_ARTWORK_LOADING",
+        payload: {
+          loading: false,
+          success: false,
+          error: err.message,
+        },
+      });
+    }
+  };
+
+export const resetArtworkLoading = () => ({
+  type: "SET_UPDATE_ARTWORK_LOADING",
+  payload: { loading: false, success: false, error: "" },
+});

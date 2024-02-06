@@ -109,7 +109,7 @@ const Gallery: React.FC = () => {
                 <b>{art.name}</b> By {art.artist?.displayName}
               </div>
               <div className="collection">{art.collection}</div>
-              <div className="price">{art.price}</div>
+              <div className="price">{art.price} ETH</div>
             </div>
           </div>
         ))}

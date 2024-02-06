@@ -53,6 +53,7 @@ describe("Artwork Component", () => {
     expect(screen.getByText(artworkData.name)).toBeInTheDocument();
     expect(screen.getByText(artworkData.collection)).toBeInTheDocument();
     expect(screen.getByText(artworkData.price)).toBeInTheDocument();
+    expect(screen.getByText("ETH")).toBeInTheDocument();
     expect(screen.getByText(artworkData.description)).toBeInTheDocument();
     expect(
       screen.getByText(artworkData.artist.displayName)
