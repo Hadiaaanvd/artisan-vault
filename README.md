@@ -34,7 +34,7 @@ Artisan Vault is a digital platform where artists can showcase their artwork. Ar
 To get started with the Artisan Vault app, follow these steps:
 
 1. Clone the repository to your local machine:
-git clone [https://github.com/yourusername/artisan-vault.git](https://github.com/Hadiaaanvd/artisan-vault.git)
+git clone (https://github.com/Hadiaaanvd/artisan-vault.git)
 cd artisan-vault
 
 2. Install the necessary dependencies:
